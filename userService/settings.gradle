@@ -1,3 +1,8 @@
 rootProject.name = 'demo'
-include 'buildSrc'
+
+include 'inbound'
+include 'untitled'
+include 'application'
+include 'domain'
+include 'outbound'
 
