@@ -1,7 +1,8 @@
 package integreation.mappers;
 
-import com.example.demo.controller.DTOS.requests.UserCreationRequestDTO;
-import com.example.demo.domain.User;
+
+
+import domain.User;
 
 import java.util.List;
 

@@ -1,6 +1,8 @@
 package integreation.integration;
 
-import com.example.demo.domain.User;
+
+
+import domain.User;
 import integreation.mappers.KeycloakUser;
 import integreation.mappers.UserIntegreationKeycloakMappers;
 import lombok.Data;
@@ -19,7 +21,7 @@ public class KeycloakIntegration {
 
     private final WebClient webClient;
 
-    public Mono<String> createUser( User user ) {
+    public Mono<String> createUser(User user ) {
 
         KeycloakUser keycloakUser = UserIntegreationKeycloakMappers.domainToKeycloakUser( user );
 

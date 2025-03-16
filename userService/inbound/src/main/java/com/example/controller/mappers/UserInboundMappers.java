@@ -1,9 +1,10 @@
-package services.mappers;
+package com.example.controller.mappers;
 
-import com.example.demo.controller.DTOS.requests.UserCreationRequestDTO;
-import com.example.demo.domain.User;
 
-public class UserServiceMappers {
+import com.example.controller.DTOS.requests.UserCreationRequestDTO;
+import domain.User;
+
+public class UserInboundMappers {
 
     public static User requestToDomain(UserCreationRequestDTO userCreationRequestDTO) {
 

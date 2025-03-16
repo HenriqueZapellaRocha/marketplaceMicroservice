@@ -1,6 +1,6 @@
 package repository.mappers;
 
-import com.example.demo.domain.User;
+import domain.User;
 import repository.entities.UserEntity;
 
 
