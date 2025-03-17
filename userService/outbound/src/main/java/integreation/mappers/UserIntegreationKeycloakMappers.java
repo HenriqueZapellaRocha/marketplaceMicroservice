@@ -2,13 +2,13 @@ package integreation.mappers;
 
 
 
-import domain.User;
+import domain.User.User;
 
 import java.util.List;
 
 public class UserIntegreationKeycloakMappers {
 
-    public static KeycloakUser domainToKeycloakUser( User user ) {
+    public static KeycloakUser domainToKeycloakUserNoRoles( User user ) {
 
         return KeycloakUser.builder()
                 .username( user.getUsername() )
@@ -17,7 +17,19 @@ public class UserIntegreationKeycloakMappers {
                 .email( user.getEmail() )
                 .enabled( true )
                 .emailVerified( false )
-                .realmRoles( List.of( user.getRoles() ) )
+                .build();
+    }
+
+    public static KeycloakUser domainToKeycloakUserWithRoles( User user ) {
+
+        return KeycloakUser.builder()
+                .username( user.getUsername() )
+                .firstName( user.getFirstName() )
+                .lastName( user.getLastName() )
+                .email( user.getEmail() )
+                .enabled( true )
+                .emailVerified( false )
+                .clientRoles( List.of( user.getRoles() ) )
                 .build();
     }
 }

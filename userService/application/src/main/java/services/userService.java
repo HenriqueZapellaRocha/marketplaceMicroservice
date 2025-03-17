@@ -1,13 +1,13 @@
 package services;
 
 
-import domain.User;
+import domain.User.User;
+import domain.exceptions.UserCreationException;
 import integreation.integration.KeycloakIntegration;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import repository.entities.UserEntity;
 import repository.mappers.UserRepositoryMappers;
 import repository.repositories.UserRepository;
 
@@ -29,20 +29,12 @@ public class userService {
                 .flatMap( userId -> {
 
                     user.setUserId( userId );
-                    UserEntity userEntity = UserRepositoryMappers.domainToEntity( user );
 
-
-
-                    Mono<UserEntity> saved = userRepository.save( userEntity );
-
-                    return saved.doOnSuccess(savedEntity ->
-                            log.info("User saved: " + savedEntity.toString())
-                    );
-
-
+                    return keycloakIntegreation.addRoleToUser( userId,  user.getRoles() )
+                            .then(Mono.defer(() -> userRepository.save( UserRepositoryMappers.domainToEntity( user ) )));
 
                 } )
+                .onErrorResume( e -> Mono.error( new UserCreationException( "error creating user" ) ) )
                 .then();
-
     }
 }

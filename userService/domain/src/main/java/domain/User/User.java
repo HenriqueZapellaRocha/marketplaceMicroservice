@@ -1,4 +1,7 @@
-package domain;
+package domain.User;
+
+import domain.Store.Store;
+import domain.enums.UserRoles;
 
 public class User {
 
@@ -6,15 +9,15 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private String roles;
+    private UserRoles roles;
     private String userId;
     private String country;
     private String city;
     private String cpf;
+    private Store store;
 
-    public User() {}
-
-    public User(String username, String firstName, String lastName, String email, String roles, String userId, String country, String city, String cpf) {
+    public User(String username, String firstName, String lastName, String email, UserRoles roles, String userId,
+                String country, String city, String cpf, Store store) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -24,6 +27,7 @@ public class User {
         this.country = country;
         this.city = city;
         this.cpf = cpf;
+        this.store = store;
     }
 
     public String getCpf() {
@@ -58,11 +62,11 @@ public class User {
         this.userId = userId;
     }
 
-    public String getRoles() {
+    public UserRoles getRoles() {
         return roles;
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(UserRoles roles) {
         this.roles = roles;
     }
 
@@ -104,11 +108,12 @@ public class User {
         private String firstName;
         private String lastName;
         private String email;
-        private String roles;
+        private UserRoles roles;
         private String userId;
         private String country;
         private String city;
         private String cpf;
+        private Store store;
 
         public UserBuilder() {}
 
@@ -136,7 +141,7 @@ public class User {
             return this;
         }
 
-        public UserBuilder roles(String roles) {
+        public UserBuilder roles(UserRoles roles) {
             this.roles = roles;
             return this;
         }
@@ -161,8 +166,13 @@ public class User {
             return this;
         }
 
+        public UserBuilder store( Store store ) {
+            this.store = store;
+            return this;
+        }
+
         public User build() {
-            return new User(username, firstName, lastName, email, roles, userId, country, city, cpf);
+            return new User(username, firstName, lastName, email, roles, userId, country, city, cpf, store);
         }
 
 

@@ -1,4 +1,4 @@
-package repository.entities;
+package repository.entities.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

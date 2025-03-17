@@ -1,5 +1,6 @@
 package com.example.controller.DTOS.requests;
 
+import domain.enums.UserRoles;
 import lombok.Builder;
 
 
@@ -11,7 +12,7 @@ public record UserCreationRequestDTO (
         String firstName,
         String lastName,
         String email,
-        String roles,
+        UserRoles roles,
         String userId,
         String country,
         String city,

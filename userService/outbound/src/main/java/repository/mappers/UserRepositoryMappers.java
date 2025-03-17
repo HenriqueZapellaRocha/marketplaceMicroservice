@@ -1,18 +1,29 @@
 package repository.mappers;
 
-import domain.User;
-import repository.entities.UserEntity;
+import domain.User.User;
+import domain.enums.UserRoles;
+import repository.entities.User.RoleRequestDTO;
+import repository.entities.User.UserEntity;
 
 
 public class UserRepositoryMappers {
 
-    public static UserEntity domainToEntity(User user ) {
+    public static UserEntity domainToEntity( User user ) {
 
         return UserEntity.builder()
                 .userId( user.getUserId() )
                 .country( user.getCountry() )
                 .city( user.getCity() )
                 .cpf( user.getCpf() )
+                .build();
+
+    }
+
+    public static RoleRequestDTO valuesToRoleRequestDTO(String roleId, UserRoles userRoleName ) {
+
+        return RoleRequestDTO.builder()
+                .id( roleId )
+                .name( userRoleName.toString() )
                 .build();
 
     }
