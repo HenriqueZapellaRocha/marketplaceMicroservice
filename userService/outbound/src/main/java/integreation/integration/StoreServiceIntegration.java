@@ -17,7 +17,7 @@ public class StoreServiceIntegration {
     public Mono<Store> createStore(StoreCreationRequestDTO storeDTO) {
         return webClient
                 .post()
-                .uri("http://localhost:8091/store")
+                .uri( "http://localhost:8091/store" )
                 .contentType( MediaType.APPLICATION_JSON )
                 .bodyValue( storeDTO )
                 .retrieve()

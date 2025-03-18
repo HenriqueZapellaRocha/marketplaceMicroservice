@@ -14,10 +14,13 @@ public class StoreEntity {
 
     @Id
     private String id;
+    
     private String ownerId;
 
     @Indexed( unique = true )
     private String name;
+
+
     private String description;
     private String address;
     private String city;

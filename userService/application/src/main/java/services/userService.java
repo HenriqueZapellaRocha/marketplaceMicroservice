@@ -2,7 +2,7 @@ package services;
 
 
 import domain.User.User;
-import domain.exceptions.UserCreationException;
+import domain.enums.UserRoles;
 import integreation.DTOS.StoreCreationRequestDTO;
 import integreation.integration.KeycloakIntegration;
 import integreation.integration.StoreServiceIntegration;
@@ -33,18 +33,28 @@ public class userService {
 
                     user.setUserId( userId );
 
+                    if( user.getRoles() == UserRoles.STORE_ADMIN ) {
+
+                        return storeServiceIntegration.createStore(StoreCreationRequestDTO.builder()
+                                .ownerId(user.getUserId())
+                                .name(user.getStore().getName())
+                                .description(user.getStore().getDescription())
+                                .address(user.getStore().getAddress())
+                                .city(user.getStore().getCity())
+                                .state(user.getStore().getState())
+                                .build())
+                                .then(Mono.when(
+                                        keycloakIntegreation.addRoleToUser( userId, user.getRoles() ),
+                                        userRepository.save( UserRepositoryMappers.domainToEntity( user ) )
+                                ));
+                    }
+
                     return Mono.when(
-                            keycloakIntegreation.addRoleToUser( userId,  user.getRoles() ),
-                            userRepository.save( UserRepositoryMappers.domainToEntity( user )),
-                            storeServiceIntegration.createStore( StoreCreationRequestDTO.builder()
-                                            .ownerId( user.getUserId() )
-                                            .name( user.getStore().getName() )
-                                            .description( user.getStore().getDescription() )
-                                            .address( user.getStore().getAddress() )
-                                            .city( user.getStore().getCity() )
-                                            .state( user.getStore().getState() )
-                                    .build() ))
-                ;} )
+                            keycloakIntegreation.addRoleToUser( userId, user.getRoles() ),
+                            userRepository.save( UserRepositoryMappers.domainToEntity( user ) )
+                    );
+
+                } )
                 .then();
     }
 }
