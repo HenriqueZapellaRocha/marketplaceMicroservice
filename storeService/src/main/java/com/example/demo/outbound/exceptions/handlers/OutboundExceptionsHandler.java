@@ -12,9 +12,9 @@ import reactor.core.publisher.Mono;
 @RestControllerAdvice
 public class OutboundExceptionsHandler {
 
-    @ExceptionHandler(DuplicateKeyException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public Mono<StoreAlreadyExistDTO> storeAlreadyExistException(DuplicateKeyException e ) {
+    @ExceptionHandler( DuplicateKeyException.class )
+    @ResponseStatus( HttpStatus.CONFLICT )
+    public Mono<StoreAlreadyExistDTO> storeAlreadyExistException( DuplicateKeyException e ) {
         return Mono.just( new StoreAlreadyExistDTO( "Store already exist" ) );
     }
 }
