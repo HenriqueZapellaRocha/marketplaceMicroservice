@@ -3,6 +3,7 @@ package services;
 
 import domain.User.User;
 import domain.exceptions.UserCreationException;
+import integreation.DTOS.StoreCreationRequestDTO;
 import integreation.integration.KeycloakIntegration;
 import integreation.integration.StoreServiceIntegration;
 import lombok.Data;
@@ -34,10 +35,16 @@ public class userService {
 
                     return Mono.when(
                             keycloakIntegreation.addRoleToUser( userId,  user.getRoles() ),
-                            userRepository.save( UserRepositoryMappers.domainToEntity( user )) )
-//                            storeServiceIntegration.createStore( user.getStore() ))
+                            userRepository.save( UserRepositoryMappers.domainToEntity( user )),
+                            storeServiceIntegration.createStore( StoreCreationRequestDTO.builder()
+                                            .ownerId( user.getUserId() )
+                                            .name( user.getStore().getName() )
+                                            .description( user.getStore().getDescription() )
+                                            .address( user.getStore().getAddress() )
+                                            .city( user.getStore().getCity() )
+                                            .state( user.getStore().getState() )
+                                    .build() ))
                 ;} )
-                .onErrorResume( e -> Mono.error( new UserCreationException( "error creating user" ) ) )
                 .then();
     }
 }
