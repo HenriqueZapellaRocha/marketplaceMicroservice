@@ -75,6 +75,14 @@ public class KeycloakIntegration {
                 } ).onErrorResume( e -> Mono.error( new UserCreationException( "Error creating user" ) ) );
     }
 
+    public Mono<Void> deleteUser( User user ) {
+        return webClient.delete()
+                .uri( "http://localhost:8080/admin/realms/{realm}/users/{id}", "master", user.getUserId() )
+                .header( HttpHeaders.AUTHORIZATION, "Bearer " + Configs.getToken() )
+                .retrieve()
+                .bodyToMono( Void.class );
+    }
+
     public Mono<String> getRoleId( UserRoles roleName ) {
 
         if( userRolesSaved != null && userRolesSaved.containsKey( roleName ) ) {
