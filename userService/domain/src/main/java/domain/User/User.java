@@ -102,6 +102,14 @@ public class User {
         this.username = username;
     }
 
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
     public static class UserBuilder {
 
         private String username;

@@ -4,6 +4,7 @@ package services;
 import domain.User.User;
 import domain.exceptions.UserCreationException;
 import integreation.integration.KeycloakIntegration;
+import integreation.integration.StoreServiceIntegration;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class userService {
 
     private final KeycloakIntegration keycloakIntegreation;
     private final UserRepository userRepository;
+    private final StoreServiceIntegration storeServiceIntegration;
 
     public Mono<Void> createUser( User user ) {
 
@@ -30,10 +32,11 @@ public class userService {
 
                     user.setUserId( userId );
 
-                    return keycloakIntegreation.addRoleToUser( userId,  user.getRoles() )
-                            .then(Mono.defer(() -> userRepository.save( UserRepositoryMappers.domainToEntity( user ) )));
-
-                } )
+                    return Mono.when(
+                            keycloakIntegreation.addRoleToUser( userId,  user.getRoles() ),
+                            userRepository.save( UserRepositoryMappers.domainToEntity( user )) )
+//                            storeServiceIntegration.createStore( user.getStore() ))
+                ;} )
                 .onErrorResume( e -> Mono.error( new UserCreationException( "error creating user" ) ) )
                 .then();
     }
