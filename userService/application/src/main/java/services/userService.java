@@ -21,14 +21,14 @@ import repository.repositories.UserRepository;
 public class userService {
 
 
-    private final KeycloakIntegration keycloakIntegreation;
+    private final KeycloakIntegration keycloakIntegration;
     private final UserRepository userRepository;
     private final StoreServiceIntegration storeServiceIntegration;
 
     public Mono<Void> createUser( User user ) {
 
 
-        return keycloakIntegreation
+        return keycloakIntegration
                 .createUser( user )
                 .flatMap( userId -> {
 
@@ -36,26 +36,19 @@ public class userService {
 
                     if( user.getRoles() == UserRoles.STORE_ADMIN ) {
 
-                        return storeServiceIntegration.createStore( StoreCreationRequestDTO.builder()
-                                .ownerId(user.getUserId())
-                                .name(user.getStore().getName())
-                                .description(user.getStore().getDescription())
-                                .address(user.getStore().getAddress())
-                                .city(user.getStore().getCity())
-                                .state(user.getStore().getState())
-                                .build() )
+                        return storeServiceIntegration.createStore( user.getStore(), userId )
                                 .onErrorResume( e ->
-                                         keycloakIntegreation.deleteUser( user )
+                                         keycloakIntegration.deleteUser( user )
                                         .then( Mono.error( new UserCreationException( "store already exist" ) ) )
                                 )
                                 .then( Mono.when(
-                                        keycloakIntegreation.addRoleToUser( userId, user.getRoles() ),
+                                        keycloakIntegration.addRoleToUser( userId, user.getRoles() ),
                                         userRepository.save( UserRepositoryMappers.domainToEntity( user ) )
                                 ));
                     }
 
                     return Mono.when(
-                            keycloakIntegreation.addRoleToUser( userId, user.getRoles() ),
+                            keycloakIntegration.addRoleToUser( userId, user.getRoles() ),
                             userRepository.save( UserRepositoryMappers.domainToEntity( user ) )
                     );
 

@@ -76,6 +76,7 @@ public class KeycloakIntegration {
     }
 
     public Mono<Void> deleteUser( User user ) {
+
         return webClient.delete()
                 .uri( "http://localhost:8080/admin/realms/{realm}/users/{id}", "master", user.getUserId() )
                 .header( HttpHeaders.AUTHORIZATION, "Bearer " + Configs.getToken() )

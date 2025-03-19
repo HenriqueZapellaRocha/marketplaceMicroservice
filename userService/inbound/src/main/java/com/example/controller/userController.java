@@ -25,4 +25,11 @@ public class userController {
 
     }
 
+    @GetMapping
+    public Mono<String> hello() {
+
+        return Mono.just("hello");
+
+    }
+
 }
