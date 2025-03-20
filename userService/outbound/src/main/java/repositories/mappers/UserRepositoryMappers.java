@@ -1,6 +1,5 @@
 package repositories.mappers;
 
-import domain.Store.Store;
 import domain.User.User;
 import domain.enums.UserRoles;
 import integreation.DTOS.RoleRequestDTO;
