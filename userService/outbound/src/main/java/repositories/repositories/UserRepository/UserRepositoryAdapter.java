@@ -1,7 +1,7 @@
 package repositories.repositories.UserRepository;
 
 import domain.User.User;
-import domain.repositories.User.UserRepositoryPort;
+import domain.User.repository.UserRepositoryPort;
 import lombok.Data;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;

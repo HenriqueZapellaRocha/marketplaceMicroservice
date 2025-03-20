@@ -1,6 +1,7 @@
 package integreation.integration;
 
 import domain.Store.Store;
+import domain.Store.integration.StoreServiceIntegrationPort;
 import integreation.mappers.StoreOutboundMappers;
 import lombok.Data;
 import org.springframework.http.MediaType;
@@ -10,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 @Data
-public class StoreServiceIntegration {
+public class StoreServiceIntegrationAdapter implements StoreServiceIntegrationPort {
 
     private final WebClient webClient;
 

@@ -4,6 +4,7 @@ package integreation.integration;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import domain.User.User;
+import domain.User.integration.keycloak.KeycloakIntegrationPort;
 import domain.enums.UserRoles;
 import domain.exceptions.UserCreationException;
 import integreation.configs.Configs;
@@ -30,7 +31,7 @@ import java.util.regex.Pattern;
 @Slf4j
 @Data
 @Service
-public class KeycloakIntegration {
+public class KeycloakIntegration implements KeycloakIntegrationPort {
 
     private final WebClient webClient;
     private Map<UserRoles, String> userRolesSaved;

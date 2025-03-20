@@ -1,17 +1,16 @@
 package services;
 
 
+import domain.Store.integration.StoreServiceIntegrationPort;
 import domain.User.User;
+import domain.User.integration.keycloak.KeycloakIntegrationPort;
+import domain.User.repository.UserRepositoryPort;
 import domain.enums.UserRoles;
 import domain.exceptions.UserCreationException;
-import integreation.integration.KeycloakIntegration;
-import integreation.integration.StoreServiceIntegration;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import repositories.mappers.UserRepositoryMappers;
-import repositories.repositories.UserRepository.UserRepository;
 
 
 @Slf4j
@@ -20,9 +19,9 @@ import repositories.repositories.UserRepository.UserRepository;
 public class userService {
 
 
-    private final KeycloakIntegration keycloakIntegration;
-    private final UserRepository userRepository;
-    private final StoreServiceIntegration storeServiceIntegration;
+    private final KeycloakIntegrationPort keycloakIntegration;
+    private final UserRepositoryPort userRepository;
+    private final StoreServiceIntegrationPort storeServiceIntegration;
 
     public Mono<Void> createUser( User user ) {
 
@@ -42,13 +41,13 @@ public class userService {
                                 )
                                 .then( Mono.when(
                                         keycloakIntegration.addRoleToUser( userId, user.getRoles() ),
-                                        userRepository.save( UserRepositoryMappers.domainToEntity( user ) )
+                                        userRepository.save( user )
                                 ));
                     }
 
                     return Mono.when(
                             keycloakIntegration.addRoleToUser( userId, user.getRoles() ),
-                            userRepository.save( UserRepositoryMappers.domainToEntity( user ) )
+                            userRepository.save( user )
                     );
 
                 } )
