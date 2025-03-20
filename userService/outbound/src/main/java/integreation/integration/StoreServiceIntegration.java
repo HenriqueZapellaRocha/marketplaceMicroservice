@@ -1,7 +1,6 @@
 package integreation.integration;
 
 import domain.Store.Store;
-import integreation.DTOS.StoreCreationRequestDTO;
 import integreation.mappers.StoreOutboundMappers;
 import lombok.Data;
 import org.springframework.http.MediaType;
@@ -22,7 +21,7 @@ public class StoreServiceIntegration {
                 .contentType( MediaType.APPLICATION_JSON )
                 .bodyValue( StoreOutboundMappers.domainToStoreCreationDTO( store, ownerId ) )
                 .retrieve()
-                .bodyToMono(Store.class);
+                .bodyToMono( Store.class );
 
     }
 }

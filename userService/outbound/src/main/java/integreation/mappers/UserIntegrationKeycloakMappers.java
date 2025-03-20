@@ -1,12 +1,10 @@
 package integreation.mappers;
 
-
-
 import domain.User.User;
 
 import java.util.List;
 
-public class UserIntegreationKeycloakMappers {
+public class UserIntegrationKeycloakMappers {
 
     public static KeycloakUser domainToKeycloakUserNoRoles( User user ) {
 

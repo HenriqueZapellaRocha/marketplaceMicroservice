@@ -1,9 +1,10 @@
-package repository.mappers;
+package repositories.mappers;
 
+import domain.Store.Store;
 import domain.User.User;
 import domain.enums.UserRoles;
-import repository.entities.User.RoleRequestDTO;
-import repository.entities.User.UserEntity;
+import integreation.DTOS.RoleRequestDTO;
+import repositories.entities.User.UserEntity;
 
 
 public class UserRepositoryMappers {
@@ -19,7 +20,7 @@ public class UserRepositoryMappers {
 
     }
 
-    public static RoleRequestDTO valuesToRoleRequestDTO(String roleId, UserRoles userRoleName ) {
+    public static RoleRequestDTO valuesToRoleRequestDTO( String roleId, UserRoles userRoleName ) {
 
         return RoleRequestDTO.builder()
                 .id( roleId )

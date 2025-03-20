@@ -5,8 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 
 
-@SpringBootApplication(scanBasePackages = {"com.example.demo", "com.example.controller", "services",  "integreation", "repository", "repository.repositories", "exceptionHandlers"})
-@EnableReactiveMongoRepositories( basePackages = "repository.repositories")
+@SpringBootApplication(scanBasePackages = {"com.example.demo", "com.example.controller", "services",  "integreation",
+		"repositories", "repositories.repositories", "exceptionHandlers"})
+@EnableReactiveMongoRepositories( basePackages = "repositories.repositories")
 public class DemoApplication {
 
 	public static void main(String[] args) {

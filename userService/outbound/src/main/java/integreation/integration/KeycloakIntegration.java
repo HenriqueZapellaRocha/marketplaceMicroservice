@@ -8,7 +8,7 @@ import domain.enums.UserRoles;
 import domain.exceptions.UserCreationException;
 import integreation.configs.Configs;
 import integreation.mappers.KeycloakUser;
-import integreation.mappers.UserIntegreationKeycloakMappers;
+import integreation.mappers.UserIntegrationKeycloakMappers;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -17,8 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import repository.entities.User.RoleRequestDTO;
-import repository.mappers.UserRepositoryMappers;
+import integreation.DTOS.RoleRequestDTO;
+import repositories.mappers.UserRepositoryMappers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +37,7 @@ public class KeycloakIntegration {
 
     public Mono<String> createUser( User user ) {
 
-        KeycloakUser keycloakUser = UserIntegreationKeycloakMappers.domainToKeycloakUserNoRoles( user );
+        KeycloakUser keycloakUser = UserIntegrationKeycloakMappers.domainToKeycloakUserNoRoles( user );
 
         return webClient.post()
                 .contentType( MediaType.APPLICATION_JSON )
@@ -84,7 +84,7 @@ public class KeycloakIntegration {
                 .bodyToMono( Void.class );
     }
 
-    public Mono<String> getRoleId( UserRoles roleName ) {
+    private Mono<String> getRoleId( UserRoles roleName ) {
 
         if( userRolesSaved != null && userRolesSaved.containsKey( roleName ) ) {
             return Mono.just( userRolesSaved.get( roleName ) );

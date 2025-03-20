@@ -6,7 +6,7 @@ import domain.User.User;
 
 public class UserInboundMappers {
 
-    public static User requestToDomain(UserCreationRequestDTO userCreationRequestDTO) {
+    public static User requestToDomain( UserCreationRequestDTO userCreationRequestDTO ) {
 
         return User.UserBuilder.Builder()
                 .username( userCreationRequestDTO.username() )

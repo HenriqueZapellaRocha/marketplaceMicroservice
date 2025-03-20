@@ -1,4 +1,4 @@
-package repository.entities.User;
+package integreation.DTOS;
 
 import lombok.Builder;
 

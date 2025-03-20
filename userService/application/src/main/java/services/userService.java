@@ -4,15 +4,14 @@ package services;
 import domain.User.User;
 import domain.enums.UserRoles;
 import domain.exceptions.UserCreationException;
-import integreation.DTOS.StoreCreationRequestDTO;
 import integreation.integration.KeycloakIntegration;
 import integreation.integration.StoreServiceIntegration;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import repository.mappers.UserRepositoryMappers;
-import repository.repositories.UserRepository;
+import repositories.mappers.UserRepositoryMappers;
+import repositories.repositories.UserRepository.UserRepository;
 
 
 @Slf4j
