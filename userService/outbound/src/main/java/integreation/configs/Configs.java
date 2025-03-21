@@ -1,5 +1,6 @@
 package integreation.configs;
 
+import integreation.configs.tokenAuth.RetriveTokenAdmin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -8,16 +9,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class Configs {
 
-    private static final String meuToken = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVY0RfV1U4Q2FHbXJIMjhNY0h1T1B5VG0xX255LWx2eEtndHh5cjhMX2hNIn0.eyJleHAiOjE3NDI0NDAwNDEsImlhdCI6MTc0MjQwNDA0MSwianRpIjoiNTQzNTEwYzUtNWU0MS00Y2ZhLWIyM2QtZWZhZjAwYjZlNTM3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJhdWQiOlsibWFzdGVyLXJlYWxtIiwiYWNjb3VudCJdLCJzdWIiOiJhM2QzOGQ4Ni03YWVlLTQ4N2ItYWNjMy0zNjhlMWRhN2VhNmEiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJjcmVhdGVVc2VyIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiY3JlYXRlLXJlYWxtIiwiZGVmYXVsdC1yb2xlcy1tYXN0ZXIiLCJvZmZsaW5lX2FjY2VzcyIsImFkbWluIiwidW1hX2F1dGhvcml6YXRpb24iXX0sInJlc291cmNlX2FjY2VzcyI6eyJjcmVhdGVVc2VyIjp7InJvbGVzIjpbInVtYV9wcm90ZWN0aW9uIl19LCJtYXN0ZXItcmVhbG0iOnsicm9sZXMiOlsidmlldy1pZGVudGl0eS1wcm92aWRlcnMiLCJ2aWV3LXJlYWxtIiwibWFuYWdlLWlkZW50aXR5LXByb3ZpZGVycyIsImltcGVyc29uYXRpb24iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxNzIuMjEuMC4xIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtY3JlYXRldXNlciIsImNsaWVudEFkZHJlc3MiOiIxNzIuMjEuMC4xIiwiY2xpZW50X2lkIjoiY3JlYXRlVXNlciJ9.nKtsJ5akMtb7AZOFyXBxu4hNKQrNrdXJMff2NpjaaSx4LNbYejvOLa5GvvEcY0xr7fekqshEwN3xc2UEjaSovf1eHlaY7uCS5LjqGhBseOV0hcARJRrunvvL_TO1o7idAeb3EPoqIvHfr-Y6Y_8zrzXGAtSJcAjumNDvbb0zWEmIqwSOu_EqaOTbw5iZksREtQ38a_6-zIqw0r2ENqS-WlQEPsnzzBwlOlyGavnkNAkOl9C8Mx_Bwyopsr-WrZYiPTqq0MEPJfuoTfwmd_FKVtquidTklSL-PHlX84dquz2IAG6uIqc9G3Cub0DAPGcps49-hxnhlbP3_55BdrnprA";
+    private RetriveTokenAdmin retriveTokenAdmin;
+
+
     @Bean
     public WebClient webClient() {
         return WebClient.builder()
                 .baseUrl("http://localhost:8080/admin/realms/master/users")
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + meuToken)
                 .build();
     }
 
-    public static String getToken() {
-        return meuToken;
-    }
 }

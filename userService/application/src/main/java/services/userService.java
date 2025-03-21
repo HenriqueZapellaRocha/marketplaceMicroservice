@@ -24,10 +24,10 @@ public class userService {
     private final UserRepositoryPort userRepository;
     private final StoreServiceIntegrationPort storeServiceIntegration;
     private final RetriveTokenAdmin retriveTokenAdmin;
+    private Mono<String> token;
 
     public Mono<Void> createUser( User user ) {
 
-        retriveTokenAdmin.getAdminToken();
 
         return keycloakIntegration
                 .createUser( user )
