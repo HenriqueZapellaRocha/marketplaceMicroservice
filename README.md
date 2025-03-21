@@ -1,1 +1,1 @@
-# the tokens and keys are exposed beacuse it`s in building moment and tests, everything is lcoalhost so whatever this at time. When implement cloud config and Kube dns this problem will be resolved
+# the tokens and keys are exposed beacuse it`s in building moment and tests, everything is locallhost so whatever this at time. When implement cloud config and Kube dns this problem will be resolved
