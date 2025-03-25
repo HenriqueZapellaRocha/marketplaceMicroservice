@@ -20,7 +20,7 @@ public class RoutesGateway {
                 .route( "productService", r -> r.path( "/product" )
                         .and()
                         .method( HttpMethod.POST )
-                        .uri( "http://localhost:8090/product" ))
+                        .uri( "http://localhost:8097/product" ))
                 .build();
 
     }

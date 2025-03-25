@@ -20,7 +20,8 @@ public class ProductController {
 
     @PostMapping
     public Mono<ProductCreationResponseDTO> createProduct( @RequestBody ProductCreationRequestDTO
-                                                                       productCreationtRequestDTO ) {
+                                                                        productCreationtRequestDTO ) {
+        System.out.println("im here");
         return productService.createProduct( ProductServiceMappers.productRequestToDomain( productCreationtRequestDTO ) )
                 .map( ProductServiceMappers::domainToResponse );
     }
