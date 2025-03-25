@@ -17,6 +17,10 @@ public class RoutesGateway {
                         .and()
                         .method( HttpMethod.POST )
                         .uri( "http://localhost:8090/user" ))
+                .route( "productService", r -> r.path( "/product" )
+                        .and()
+                        .method( HttpMethod.POST )
+                        .uri( "http://localhost:8090/product" ))
                 .build();
 
     }

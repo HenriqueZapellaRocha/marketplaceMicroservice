@@ -15,16 +15,16 @@ import java.util.Map;
 public class JWTConverter implements Converter<Jwt, Mono<AbstractAuthenticationToken>> {
 
     @Override
-    public Mono<AbstractAuthenticationToken> convert(Jwt jwt) {
+    public Mono<AbstractAuthenticationToken> convert( Jwt jwt ) {
 
-        Map<String, Collection<String>> realmAccess = jwt.getClaim("realm_access");
+        Map<String, Collection<String>> realmAccess = jwt.getClaim( "realm_access" );
         Collection<String> roles = realmAccess.get( "roles" );
         var grants = roles
                 .stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_"+ role)).toList();
+                .map( role -> new SimpleGrantedAuthority( "ROLE_"+ role )).toList();
 
 
-        return Mono.just( new JwtAuthenticationToken(jwt, grants) );
+        return Mono.just( new JwtAuthenticationToken( jwt, grants ) );
     }
 
 }
