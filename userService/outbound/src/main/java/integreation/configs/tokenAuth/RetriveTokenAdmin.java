@@ -14,7 +14,7 @@ import java.util.Map;
 @Data
 public class RetriveTokenAdmin {
 
-    private final WebClient webClient;
+    private final WebClient webClient = WebClient.builder().build();
     private String token;
     private Instant tokenExpiration = Instant.MIN;
 

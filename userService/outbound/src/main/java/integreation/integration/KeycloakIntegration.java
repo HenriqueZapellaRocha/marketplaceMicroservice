@@ -45,7 +45,6 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
         return webClient.post()
                 .contentType( MediaType.APPLICATION_JSON )
                 .bodyValue( keycloakUser )
-                .header( HttpHeaders.AUTHORIZATION, "Bearer " + retriveTokenAdmin.getAdminToken() )
                 .exchangeToMono( clientResponse -> {
 
                     if( clientResponse.statusCode() != HttpStatus.CREATED )
@@ -83,7 +82,6 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
 
         return webClient.delete()
                 .uri( "http://localhost:8080/admin/realms/{realm}/users/{id}", "master", user.getUserId() )
-                .header( HttpHeaders.AUTHORIZATION, "Bearer " + retriveTokenAdmin.getAdminToken() )
                 .retrieve()
                 .bodyToMono( Void.class );
     }
@@ -96,7 +94,6 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
 
         return webClient.get()
                 .uri("http://localhost:8080/admin/realms/{realm}/roles/{roleName}", "master", roleName )
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + retriveTokenAdmin.getAdminToken() )
                 .retrieve()
                 .bodyToMono( JsonNode.class )
                 .map( roleJson -> {
@@ -126,7 +123,6 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
             return webClient.post()
                     .uri("http://localhost:8080/admin/realms/{realm}/users/{userId}/role-mappings/realm",
                             "master", userId)
-                    .header(HttpHeaders.AUTHORIZATION, "Bearer " + retriveTokenAdmin.getAdminToken() )
                     .bodyValue( request )
                     .retrieve()
                     .toBodilessEntity()

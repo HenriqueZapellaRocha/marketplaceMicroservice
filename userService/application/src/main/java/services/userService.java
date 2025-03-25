@@ -33,6 +33,8 @@ public class userService {
                 .createUser( user )
                 .flatMap( userId -> {
 
+                    log.info("im here");
+
                     user.setUserId( userId );
 
                     if( user.getRoles() == UserRoles.STORE_ADMIN ) {
