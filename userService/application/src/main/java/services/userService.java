@@ -28,12 +28,10 @@ public class userService {
 
     public Mono<Void> createUser( User user ) {
 
-
         return keycloakIntegration
                 .createUser( user )
+                .onErrorResume( error -> Mono.error( new UserCreationException( error.getMessage() ) ) )
                 .flatMap( userId -> {
-
-                    log.info("im here");
 
                     user.setUserId( userId );
 

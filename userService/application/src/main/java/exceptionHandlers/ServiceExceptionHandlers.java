@@ -15,7 +15,7 @@ public class ServiceExceptionHandlers {
     @ResponseStatus( HttpStatus.CONFLICT )
     @ResponseBody
     @ExceptionHandler( UserCreationException.class )
-    public Mono<UserCreationErrorDTO> handler(final UserCreationException e ) {
-        return Mono.just( new UserCreationErrorDTO( e.getMessage() ) );
+    public Mono<UserCreationErrorDTO> handler( final UserCreationException e ) {
+        return Mono.just( new UserCreationErrorDTO( "error creating user" ) );
     }
 }

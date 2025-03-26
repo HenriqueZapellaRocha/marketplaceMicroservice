@@ -1,10 +1,9 @@
 package com.example.controller.DTOS.requests;
 
 import domain.Store.Store;
+import domain.User.Credentials;
 import domain.enums.UserRoles;
 import lombok.Builder;
-
-
 
 @Builder
 public record UserCreationRequestDTO (
@@ -18,6 +17,7 @@ public record UserCreationRequestDTO (
         String country,
         String city,
         String cpf,
+        Credentials credentials,
         Store store
 
 ) {

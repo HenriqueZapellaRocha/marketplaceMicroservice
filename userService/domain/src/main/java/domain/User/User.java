@@ -15,9 +15,10 @@ public class User {
     private String city;
     private String cpf;
     private Store store;
+    private Credentials credentials;
 
     public User(String username, String firstName, String lastName, String email, UserRoles roles, String userId,
-                String country, String city, String cpf, Store store) {
+                String country, String city, String cpf, Store store, Credentials credentials) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,6 +29,7 @@ public class User {
         this.city = city;
         this.cpf = cpf;
         this.store = store;
+        this.credentials = credentials;
     }
 
     public String getCpf() {
@@ -110,6 +112,18 @@ public class User {
         this.store = store;
     }
 
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+
+    public Credentials getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
+    }
+
     public static class UserBuilder {
 
         private String username;
@@ -122,6 +136,7 @@ public class User {
         private String city;
         private String cpf;
         private Store store;
+        private Credentials credentials;
 
         public UserBuilder() {}
 
@@ -179,8 +194,13 @@ public class User {
             return this;
         }
 
+        public UserBuilder credentials(Credentials credentials) {
+            this.credentials = credentials;
+            return this;
+        }
+
         public User build() {
-            return new User(username, firstName, lastName, email, roles, userId, country, city, cpf, store);
+            return new User(username, firstName, lastName, email, roles, userId, country, city, cpf, store, credentials);
         }
 
 

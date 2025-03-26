@@ -20,14 +20,6 @@ public class Configs {
     public WebClient webClient() {
         return WebClient.builder()
                 .baseUrl("http://localhost:8080/admin/realms/master/users")
-                .filter(((request, next) -> retriveTokenAdmin.getAdminToken()
-                        .flatMap( retriveTokenAdmin -> {
-                            log.info(retriveTokenAdmin.toString());
-                    ClientRequest authorizedRequest = ClientRequest.from(request)
-                            .header("Authorization", "Bearer " + retriveTokenAdmin)
-                            .build();
-                    return next.exchange(authorizedRequest);
-                } )))
                 .build();
     }
 

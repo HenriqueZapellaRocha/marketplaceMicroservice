@@ -17,6 +17,7 @@ public class UserInboundMappers {
                 .country( userCreationRequestDTO.country() )
                 .roles( userCreationRequestDTO.roles() )
                 .cpf( userCreationRequestDTO.cpf() )
+                .credentials( userCreationRequestDTO.credentials() )
                 .store( userCreationRequestDTO.store() )
                 .build();
     }
