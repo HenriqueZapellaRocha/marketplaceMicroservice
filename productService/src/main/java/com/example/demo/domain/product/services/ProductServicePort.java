@@ -6,5 +6,5 @@ import reactor.core.publisher.Mono;
 
 public interface ProductServicePort {
 
-    Mono<Product> createProduct( Product product, UserInfos userInfos );
+    public Mono<Product> createProduct( Product product, UserInfos userInfos, Integer quantity );
 }

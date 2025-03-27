@@ -3,9 +3,11 @@ package com.example.demo.application.services;
 import com.example.demo.outbound.Product.messages.config.ProductCreationMessage;
 import lombok.Data;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Data
+@Service
 public class KafkaService {
 
     private final ReactiveKafkaProducerTemplate<String, ProductCreationMessage> kafkaProducer;
