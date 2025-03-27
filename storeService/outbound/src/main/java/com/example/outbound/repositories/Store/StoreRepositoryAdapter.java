@@ -19,4 +19,10 @@ public class StoreRepositoryAdapter implements StoreRepositoryPort {
         return storeRepository.save( StoreOutboundMappers.domainToStoreEntity( store ) )
                 .map( StoreOutboundMappers::storeEntityToDomain );
     }
+
+    public Mono<Store> getByOwnerId( String ownerId ) {
+
+        return storeRepository.getByOwnerId( ownerId )
+                .map( StoreOutboundMappers::storeEntityToDomain );
+    }
 }

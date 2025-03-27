@@ -7,7 +7,6 @@ import domain.User.integration.keycloak.KeycloakIntegrationPort;
 import domain.User.repository.UserRepositoryPort;
 import domain.enums.UserRoles;
 import domain.exceptions.UserCreationException;
-import integreation.configs.tokenAuth.RetriveTokenAdmin;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,8 +22,6 @@ public class userService {
     private final KeycloakIntegrationPort keycloakIntegration;
     private final UserRepositoryPort userRepository;
     private final StoreServiceIntegrationPort storeServiceIntegration;
-    private final RetriveTokenAdmin retriveTokenAdmin;
-    private Mono<String> token;
 
     public Mono<Void> createUser( User user ) {
 

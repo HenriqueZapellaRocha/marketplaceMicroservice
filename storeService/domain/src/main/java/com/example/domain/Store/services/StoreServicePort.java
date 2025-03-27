@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 public interface StoreServicePort {
 
     public Mono<Store> createStore( Store store );
+    public Mono<Store> getStoreIByOwnerId( String ownerId );
 }

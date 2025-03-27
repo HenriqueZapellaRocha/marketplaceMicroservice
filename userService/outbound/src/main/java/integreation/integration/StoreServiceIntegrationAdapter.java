@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
 @Data
 public class StoreServiceIntegrationAdapter implements StoreServiceIntegrationPort {
 
-    private final WebClient webClient;
+    private final WebClient webClient = WebClient.builder().build();
 
     public Mono<Store> createStore( Store store, String ownerId ) {
         return webClient

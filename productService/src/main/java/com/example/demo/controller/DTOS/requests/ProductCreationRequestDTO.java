@@ -8,9 +8,9 @@ import java.math.RoundingMode;
 @Builder
 public record ProductCreationRequestDTO(
 
-        String ownerId,
         String name,
         String description,
+        Integer quantity,
         BigDecimal price
 
 ) {

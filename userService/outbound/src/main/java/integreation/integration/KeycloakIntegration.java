@@ -4,14 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import domain.User.User;
 import domain.User.integration.keycloak.KeycloakIntegrationPort;
 import domain.enums.UserRoles;
-import domain.exceptions.UserCreationException;
-import integreation.configs.tokenAuth.RetriveTokenAdmin;
 import integreation.DTOS.KeycloakUser;
 import integreation.mappers.UserIntegrationKeycloakMappers;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,19 +21,15 @@ import java.util.List;
 import java.util.Map;
 import java.net.URI;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @Slf4j
 @Data
 @Service
-@AllArgsConstructor
 public class KeycloakIntegration implements KeycloakIntegrationPort {
 
-    private final WebClient webClient;
+    private final WebClient webClient = WebClient.builder().build();
     private Map<UserRoles, String> userRolesSaved;
-    private final RetriveTokenAdmin retriveTokenAdmin;
     private final AuthenticationClientKeycloak authenticationClient;
 
     public Mono<String> createUser( User user ) {
@@ -46,6 +38,7 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
 
         return authenticationClient.getAdminToken()
                         .flatMap( token -> webClient.post()
+                                .uri("http://localhost:8080/admin/realms/master/users")
                                 .contentType( MediaType.APPLICATION_JSON )
                                 .header("Authorization", "Bearer " + token)
                                 .bodyValue( keycloakUser )
@@ -86,20 +79,20 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
 
         return authenticationClient.getAdminToken()
                 .flatMap( token -> webClient.get()
-                    .uri("http://localhost:8080/admin/realms/{realm}/roles/{roleName}", "master",
+                    .uri( "http://localhost:8080/admin/realms/{realm}/roles/{roleName}", "master",
                                                                                                             roleName )
-                        .header("Authorization", "Bearer " + token)
+                        .header( "Authorization", "Bearer " + token )
                     .retrieve()
                     .bodyToMono( JsonNode.class )
                     .map( roleJson -> {
 
-                        String roleId = roleJson.get("id").asText();
+                        String roleId = roleJson.get( "id" ).asText();
 
-                        if (userRolesSaved == null) {
+                        if ( userRolesSaved == null ) {
                             userRolesSaved = new HashMap<>();
                         }
 
-                        userRolesSaved.put(roleName, roleId);
+                        userRolesSaved.put( roleName, roleId );
 
                         return roleId;
 
@@ -115,15 +108,15 @@ public class KeycloakIntegration implements KeycloakIntegrationPort {
                             .valuesToRoleRequestDTO( roleId, roleName ) );
 
 
-            return authenticationClient.getAdminToken()
-                    .flatMap( token -> webClient.post()
-                        .uri("http://localhost:8080/admin/realms/{realm}/users/{userId}/role-mappings/realm",
-                                "master", userId)
-                            .header("Authorization", "Bearer " + token)
-                        .bodyValue( request )
-                        .retrieve()
-                        .toBodilessEntity())
-                    .then();
+                    return authenticationClient.getAdminToken()
+                            .flatMap( token -> webClient.post()
+                                .uri( "http://localhost:8080/admin/realms/{realm}/users/{userId}/role-mappings/realm",
+                                        "master", userId )
+                                    .header( "Authorization", "Bearer " + token )
+                                .bodyValue( request )
+                                .retrieve()
+                                .toBodilessEntity() )
+                            .then();
 
         } );
     }

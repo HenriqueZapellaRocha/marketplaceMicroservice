@@ -6,4 +6,5 @@ import reactor.core.publisher.Mono;
 public interface StoreRepositoryPort {
 
     Mono<Store> save( Store store );
+    Mono<Store> getByOwnerId( String ownerId );
 }
