@@ -1,1 +1,6 @@
 rootProject.name = 'demo'
+include 'domain'
+include 'application'
+include 'inbound'
+include 'outbound'
+

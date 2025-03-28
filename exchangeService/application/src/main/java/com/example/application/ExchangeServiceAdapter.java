@@ -1,7 +1,7 @@
-package com.example.demo.application;
+package com.example.application;
 
-import com.example.demo.controller.ExchenageResposeDTO;
-import com.example.demo.outbound.integration.config.ExchangeIntegration;
+import com.example.config.ExchangeIntegration;
+import com.example.value.ExchangeValue;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -14,11 +14,11 @@ public class ExchangeServiceAdapter {
 
     private final ExchangeIntegration exchangeIntegration;
 
-    public Mono<ExchenageResposeDTO> makeExchange(String from, String to, BigDecimal value ){
+    public Mono<ExchangeValue> makeExchange( String from, String to, BigDecimal value ){
 
 
         return exchangeIntegration.makeExchange( from, to )
                 .map( exchange -> value.multiply( BigDecimal.valueOf(exchange) ) )
-                .map( ExchangeServiceMappers::exchangeValueToResponse );
+                .map( valueExchanged ->  new ExchangeValue( from, to, valueExchanged ) );
     }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.controller.DTOS.requests;
 
 import java.math.BigDecimal;
 

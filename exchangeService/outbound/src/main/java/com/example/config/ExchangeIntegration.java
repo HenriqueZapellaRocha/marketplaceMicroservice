@@ -1,4 +1,4 @@
-package com.example.demo.outbound.integration.config;
+package com.example.config;
 
 import lombok.Data;
 import org.springframework.stereotype.Service;

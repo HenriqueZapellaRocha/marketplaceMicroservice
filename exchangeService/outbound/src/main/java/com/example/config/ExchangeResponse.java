@@ -1,4 +1,4 @@
-package com.example.demo.outbound.integration.config;
+package com.example.config;
 
 public record ExchangeResponse(
 
