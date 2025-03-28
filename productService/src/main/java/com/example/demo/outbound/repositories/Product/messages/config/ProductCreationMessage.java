@@ -1,4 +1,4 @@
-package com.example.demo.outbound.Product.messages.config;
+package com.example.demo.outbound.repositories.Product.messages.config;
 
 import lombok.Builder;
 

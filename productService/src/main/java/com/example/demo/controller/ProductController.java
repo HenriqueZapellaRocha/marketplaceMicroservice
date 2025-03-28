@@ -5,7 +5,6 @@ import com.example.demo.application.utils.ProductServiceMappers;
 import com.example.demo.controller.DTOS.requests.ProductCreationRequestDTO;
 import com.example.demo.controller.DTOS.responses.ProductCreationResponseDTO;
 import com.example.demo.domain.product.services.ProductServicePort;
-import com.example.demo.outbound.Product.messages.config.ProductCreationMessage;
 import lombok.Data;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +19,20 @@ public class ProductController {
     private final SecurityContext securityContext;
     private final KafkaService kafkaService;
 
-    @PostMapping
+    @PostMapping( "/{from}/{to}" )
     @PreAuthorize( "hasRole('STORE_ADMIN')" )
     public Mono<ProductCreationResponseDTO> createProduct( @RequestBody ProductCreationRequestDTO
-                                                                        productCreationRequestDTO) {
+                                                                       productCreationRequestDTO,
+                                                           @PathVariable String from,
+                                                           @PathVariable String to                 ) {
         return securityContext.getUser()
                 .flatMap( user ->
                         productService.createProduct(
                                 ProductServiceMappers.productRequestToDomain( productCreationRequestDTO )
                                 , user
                                 , productCreationRequestDTO.quantity()
+                                , from
+                                ,to
                         ))
                 .map( ProductServiceMappers::domainToResponse );
     }

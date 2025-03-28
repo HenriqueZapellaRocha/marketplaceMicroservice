@@ -6,5 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface ProductServicePort {
 
-    public Mono<Product> createProduct( Product product, UserInfos userInfos, Integer quantity );
+    public Mono<Product> createProduct( Product product, UserInfos userInfos, Integer quantity, String from,
+                                        String to );
 }

@@ -1,6 +1,6 @@
 package com.example.demo.application.services;
 
-import com.example.demo.outbound.Product.messages.config.ProductCreationMessage;
+import com.example.demo.outbound.repositories.Product.messages.config.ProductCreationMessage;
 import lombok.Data;
 import org.springframework.kafka.core.reactive.ReactiveKafkaProducerTemplate;
 import org.springframework.stereotype.Service;

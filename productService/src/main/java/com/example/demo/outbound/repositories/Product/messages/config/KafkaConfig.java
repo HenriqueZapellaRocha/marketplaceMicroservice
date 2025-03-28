@@ -1,4 +1,4 @@
-package com.example.demo.outbound.Product.messages.config;
+package com.example.demo.outbound.repositories.Product.messages.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
