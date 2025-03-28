@@ -13,7 +13,7 @@ public class ProductRepositoryAdapter implements ProductRepositoryPort {
 
     private final ProductRepository productRepository;
 
-    public Mono<Product> save(Product product ){
+    public Mono<Product> save( Product product ){
         return productRepository.save( ProductOutboundMappers.domainToEntity( product ) )
                 .map( ProductOutboundMappers::entityToDomain );
     }
