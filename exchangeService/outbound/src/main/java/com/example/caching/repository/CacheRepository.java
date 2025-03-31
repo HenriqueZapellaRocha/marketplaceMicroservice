@@ -35,7 +35,19 @@ public class CacheRepository {
     public Mono<CachingExchangeEnity> get( String from, String to ) {
         String key = from + to;
 
-        return reactiveRedisTemplate.opsForValue().get( key ).onErrorResume( e -> Mono.empty() );
+        return reactiveRedisTemplate.opsForValue().get( key )
+                .flatMap( oldValue -> {
+
+                    oldValue.setViewsQuantity( oldValue.getViewsQuantity() + 1 );
+
+                    return save( from, to , oldValue )
+                            .thenReturn( oldValue );
+                } )
+                .onErrorResume( e -> {
+
+                    log.error( e.getMessage() );
+                     return Mono.empty();
+                } );
     }
 
 }

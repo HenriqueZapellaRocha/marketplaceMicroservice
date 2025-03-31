@@ -32,9 +32,5 @@ public class ExchangeServiceAdapter {
                 .map( exchangeRate -> new ExchangeValue( from, to,
                         value.multiply( BigDecimal.valueOf( exchangeRate ) )  ) );
 
-
-//        return exchangeIntegration.makeExchange( from, to )
-//                .map( exchange -> value.multiply( BigDecimal.valueOf(exchange) ) )
-//                .map( valueExchanged ->  new ExchangeValue( from, to, valueExchanged ) );
     }
 }
