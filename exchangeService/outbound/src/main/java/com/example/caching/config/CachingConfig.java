@@ -1,6 +1,9 @@
 package com.example.caching.config;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
@@ -14,15 +17,22 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class CachingConfig {
 
     @Bean
-    ReactiveRedisOperations<String, CachingExchangeEnity> redisOperations(ReactiveRedisConnectionFactory factory) {
+    public ReactiveRedisTemplate<String, CachingExchangeEnity> reactiveRedisTemplate(
+            ReactiveRedisConnectionFactory factory) {
+
+        ObjectMapper objectMapper = new ObjectMapper()
+                .registerModule(new JavaTimeModule())
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // importante!
 
         Jackson2JsonRedisSerializer<CachingExchangeEnity> serializer =
                 new Jackson2JsonRedisSerializer<>(CachingExchangeEnity.class);
+        serializer.setObjectMapper(objectMapper);
 
-        RedisSerializationContext.RedisSerializationContextBuilder<String, CachingExchangeEnity> builder =
-                RedisSerializationContext.newSerializationContext(new StringRedisSerializer());
-
-        RedisSerializationContext<String, CachingExchangeEnity> context = builder.value(serializer).build();
+        RedisSerializationContext<String, CachingExchangeEnity> context =
+                RedisSerializationContext
+                        .<String, CachingExchangeEnity>newSerializationContext(new StringRedisSerializer())
+                        .value(serializer)
+                        .build();
 
         return new ReactiveRedisTemplate<>(factory, context);
     }

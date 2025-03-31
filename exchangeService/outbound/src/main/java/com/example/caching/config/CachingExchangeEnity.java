@@ -1,10 +1,10 @@
 package com.example.caching.config;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CachingExchangeEnity {
 
-    private BigDecimal value;
+    private Double value;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime cachingMoment;
 
 }

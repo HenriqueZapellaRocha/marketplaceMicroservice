@@ -24,7 +24,12 @@ public class CacheRepository {
         return reactiveRedisTemplate.opsForValue()
                 .set(key, cachingExchangeEnity)
                 .then( reactiveRedisTemplate.expire( key, Duration.ofDays( 1 ) ) )
-                .onErrorResume( e -> Mono.just( false ) );
+                .onErrorResume( e ->  {
+
+                    log.error( e.getMessage() );
+
+                    return Mono.just( false );
+                });
     }
 
     public Mono<CachingExchangeEnity> get( String from, String to ) {

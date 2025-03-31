@@ -80,6 +80,12 @@ services:
     volumes:
       - kafka_data:/bitnami/kafka
     restart: unless-stopped
+    
+  redis:
+      container_name: 'guide-redis'
+      image: 'redis:latest'
+      ports:
+        - '6379:6379'  
 
 
 volumes:
