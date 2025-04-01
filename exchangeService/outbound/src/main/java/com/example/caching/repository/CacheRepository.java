@@ -6,9 +6,11 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Repository;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
+import java.util.Map;
 
 @Slf4j
 @Repository
@@ -19,10 +21,10 @@ public class CacheRepository {
 
     public Mono<Boolean> save( String from, String to, CachingExchangeEnity cachingExchangeEnity ) {
 
-        String key = from + to;
+        String key = from + "-" + to;
 
         return reactiveRedisTemplate.opsForValue()
-                .set(key, cachingExchangeEnity)
+                .set( key, cachingExchangeEnity )
                 .then( reactiveRedisTemplate.expire( key, Duration.ofDays( 1 ) ) )
                 .onErrorResume( e ->  {
 
@@ -33,7 +35,8 @@ public class CacheRepository {
     }
 
     public Mono<CachingExchangeEnity> get( String from, String to ) {
-        String key = from + to;
+
+        String key = from + "-" + to;
 
         return reactiveRedisTemplate.opsForValue().get( key )
                 .flatMap( oldValue -> {
@@ -48,6 +51,24 @@ public class CacheRepository {
                     log.error( e.getMessage() );
                      return Mono.empty();
                 } );
+    }
+
+    public Mono<Map<String, CachingExchangeEnity>> getAll() {
+
+        return reactiveRedisTemplate
+                .keys( "*" )
+                .flatMap( keyValue ->
+                        reactiveRedisTemplate .opsForValue().get( keyValue )
+                        .map( value -> Map.entry( keyValue, value ) ))
+                .collectMap( Map.Entry::getKey, Map.Entry::getValue );
+
+    }
+
+    public Mono<Void> delete( String from, String to ) {
+        String key = from + "-" + to;
+
+        return reactiveRedisTemplate.delete( key ).then();
+
     }
 
 }
