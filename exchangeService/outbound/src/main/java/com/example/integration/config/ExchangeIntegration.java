@@ -1,6 +1,5 @@
 package com.example.integration.config;
 
-import com.example.caching.repository.CacheRepository;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

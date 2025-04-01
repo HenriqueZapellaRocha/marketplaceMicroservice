@@ -15,18 +15,18 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class CachingConfig {
 
     @Bean
-    public ReactiveRedisTemplate<String, CachingExchangeEnity> redisOperations(ReactiveRedisConnectionFactory factory) {
+    public ReactiveRedisTemplate<String, CachingExchangeEntity> redisOperations(ReactiveRedisConnectionFactory factory) {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule( new JavaTimeModule() );
 
-        Jackson2JsonRedisSerializer<CachingExchangeEnity> serializer =
-                new Jackson2JsonRedisSerializer<>(objectMapper, CachingExchangeEnity.class);
+        Jackson2JsonRedisSerializer<CachingExchangeEntity> serializer =
+                new Jackson2JsonRedisSerializer<>(objectMapper, CachingExchangeEntity.class);
 
-        RedisSerializationContext.RedisSerializationContextBuilder<String, CachingExchangeEnity> builder =
+        RedisSerializationContext.RedisSerializationContextBuilder<String, CachingExchangeEntity> builder =
                 RedisSerializationContext.newSerializationContext( new StringRedisSerializer() );
 
-        RedisSerializationContext<String,CachingExchangeEnity> context = builder.value( serializer ).build();
+        RedisSerializationContext<String,CachingExchangeEntity> context = builder.value( serializer ).build();
 
         return new ReactiveRedisTemplate<>(factory, context);
     }

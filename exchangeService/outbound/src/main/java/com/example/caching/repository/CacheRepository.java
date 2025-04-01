@@ -1,12 +1,10 @@
 package com.example.caching.repository;
 
-
-import com.example.caching.config.CachingExchangeEnity;
+import com.example.caching.config.CachingExchangeEntity;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.ReactiveRedisTemplate;
 import org.springframework.stereotype.Repository;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -17,9 +15,9 @@ import java.util.Map;
 @Data
 public class CacheRepository {
 
-    private final ReactiveRedisTemplate<String, CachingExchangeEnity> reactiveRedisTemplate;
+    private final ReactiveRedisTemplate<String, CachingExchangeEntity> reactiveRedisTemplate;
 
-    public Mono<Boolean> save( String from, String to, CachingExchangeEnity cachingExchangeEnity ) {
+    public Mono<Boolean> save( String from, String to, CachingExchangeEntity cachingExchangeEnity ) {
 
         String key = from + "-" + to;
 
@@ -34,7 +32,7 @@ public class CacheRepository {
                 });
     }
 
-    public Mono<CachingExchangeEnity> get( String from, String to ) {
+    public Mono<CachingExchangeEntity> get( String from, String to ) {
 
         String key = from + "-" + to;
 
@@ -53,7 +51,7 @@ public class CacheRepository {
                 } );
     }
 
-    public Mono<Map<String, CachingExchangeEnity>> getAll() {
+    public Mono<Map<String, CachingExchangeEntity>> getAll() {
 
         return reactiveRedisTemplate
                 .keys( "*" )

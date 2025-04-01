@@ -1,4 +1,4 @@
-package com.example.value;
+package com.example.exchange;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

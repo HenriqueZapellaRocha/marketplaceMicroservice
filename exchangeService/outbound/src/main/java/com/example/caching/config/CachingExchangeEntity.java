@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CachingExchangeEnity {
+public class CachingExchangeEntity {
 
     private Double value;
 

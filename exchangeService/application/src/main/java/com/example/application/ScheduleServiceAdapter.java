@@ -1,8 +1,9 @@
 package com.example.application;
 
-import com.example.caching.config.CachingExchangeEnity;
+import com.example.caching.config.CachingExchangeEntity;
 import com.example.caching.repository.CacheRepository;
 import com.example.integration.config.ExchangeIntegration;
+import com.example.schedule.ports.ScheduleServicePort;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -16,19 +17,19 @@ import reactor.core.publisher.Mono;
 @Data
 @Slf4j
 @EnableScheduling
-public class ScheduleService {
+public class ScheduleServiceAdapter implements ScheduleServicePort {
 
     private final CacheRepository cacheRepository;
     private final ExchangeIntegration exchangeIntegration;
 
 
-    @Scheduled( cron = "0 10 0 * * *")
+    @Scheduled( cron = "0 10 0 * * *" )
     public Mono<Void> updateExchangeRateCache() {
         return cacheRepository.getAll()
                 .flatMapMany( mapEntries -> Flux.fromIterable( mapEntries.entrySet() ) )
                 .flatMap( mapEntry -> {
 
-                    CachingExchangeEnity cachingValue = mapEntry.getValue();
+                    CachingExchangeEntity cachingValue = mapEntry.getValue();
                     String[] fromTo = mapEntry.getKey().split( "-" );
 
                     if( fromTo.length != 2 )
