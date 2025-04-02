@@ -1,5 +1,7 @@
-package com.example.integration.config;
+package com.example.integration.exchange;
 
+import com.example.exceptions.CurrencyNotFoundException;
+import com.example.integration.DTOS.responses.ExchangeResponse;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -19,7 +21,7 @@ public class ExchangeIntegration {
                 .retrieve()
                 .bodyToMono( ExchangeResponse.class )
                 .map( ExchangeResponse::conversion_rate )
-                .onErrorResume( throwable -> Mono.error( new Exception( "Currency not found" ) ) );
+                .onErrorResume( throwable -> Mono.error( new CurrencyNotFoundException( "currency not found" ) ) );
     }
 
 }

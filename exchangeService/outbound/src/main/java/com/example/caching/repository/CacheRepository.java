@@ -17,12 +17,12 @@ public class CacheRepository {
 
     private final ReactiveRedisTemplate<String, CachingExchangeEntity> reactiveRedisTemplate;
 
-    public Mono<Boolean> save( String from, String to, CachingExchangeEntity cachingExchangeEnity ) {
+    public Mono<Boolean> save( String from, String to, CachingExchangeEntity cachingExchangeEntity ) {
 
         String key = from + "-" + to;
 
         return reactiveRedisTemplate.opsForValue()
-                .set( key, cachingExchangeEnity )
+                .set( key, cachingExchangeEntity )
                 .then( reactiveRedisTemplate.expire( key, Duration.ofDays( 1 ) ) )
                 .onErrorResume( e ->  {
 

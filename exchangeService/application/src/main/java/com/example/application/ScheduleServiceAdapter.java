@@ -2,11 +2,10 @@ package com.example.application;
 
 import com.example.caching.config.CachingExchangeEntity;
 import com.example.caching.repository.CacheRepository;
-import com.example.integration.config.ExchangeIntegration;
+import com.example.integration.exchange.ExchangeIntegration;
 import com.example.schedule.ports.ScheduleServicePort;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -16,7 +15,6 @@ import reactor.core.publisher.Mono;
 @Service
 @Data
 @Slf4j
-@EnableScheduling
 public class ScheduleServiceAdapter implements ScheduleServicePort {
 
     private final CacheRepository cacheRepository;

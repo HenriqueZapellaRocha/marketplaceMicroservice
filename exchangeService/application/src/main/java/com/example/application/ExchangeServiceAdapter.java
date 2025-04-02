@@ -3,7 +3,7 @@ package com.example.application;
 import com.example.caching.config.CachingExchangeEntity;
 import com.example.caching.repository.CacheRepository;
 import com.example.exchange.ports.ExchangeServicePort;
-import com.example.integration.config.ExchangeIntegration;
+import com.example.integration.exchange.ExchangeIntegration;
 import com.example.exchange.ExchangeValue;
 import lombok.Data;
 import org.springframework.stereotype.Service;
